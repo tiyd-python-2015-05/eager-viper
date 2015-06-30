@@ -40,6 +40,8 @@ INSTALLED_APPS = (
 
     'django_extensions',
     'rest_framework',
+
+    'activity',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,13 +78,9 @@ WSGI_APPLICATION = 'eager_viper.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+DATABASES = {'default': dj_database_url.config()}
 
 
 # Internationalization
@@ -106,3 +104,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+
+# REST framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}

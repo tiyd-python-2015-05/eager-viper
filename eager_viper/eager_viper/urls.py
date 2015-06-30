@@ -16,8 +16,18 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
+from rest_framework.routers import DefaultRouter
+from activity.views import ActivityViewSet, StatsView, StatView
+
+router = DefaultRouter(trailing_slash=False)
+router.register('activities', ActivityViewSet, base_name='activity')
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/', include(router.urls)),
+    url(r'^api/activities/(?P<activity_pk>\d+)/stats', StatsView.as_view(), name="stats"),
+    url(r'^api/stats/(?P<pk>\d+)', StatView.as_view(), name="stat-detail"),
+    url(r'^api-auth/', include('rest_framework.urls',
+                               namespace='rest_framework')),
     url(r'^$', TemplateView.as_view(template_name="index.html")),
 ]
