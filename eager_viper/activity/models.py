@@ -48,16 +48,13 @@ class ActivitySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Activity
-        fields = ('url', 'owner', 'title', '_links')
+        fields = ('id', 'url', 'owner', 'title', '_links')
 
 
 class StatSerializer(serializers.HyperlinkedModelSerializer):
-    activity = serializers.HyperlinkedRelatedField(read_only=True,
-                                                   view_name='activity-detail')
-
     class Meta:
         model = Stat
-        fields = ('url', 'activity', 'date', 'count')
+        fields = ('id', 'url', 'date', 'count')
 
 
 class StatUpdateSerializer(serializers.HyperlinkedModelSerializer):
@@ -67,4 +64,4 @@ class StatUpdateSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Stat
-        fields = ('url', 'activity', 'date', 'count')
+        fields = ('id', 'url', 'activity', 'date', 'count')
