@@ -91,7 +91,7 @@ var Stats = Backbone.Collection.extend({
 
 var ActivitiesView = Backbone.View.extend({
     initialize: function () {
-        this.model.bind('add remove change', _.bind(this.render, this));
+        this.listenTo(this.model, 'add remove change', this.render);
         this.stats = {};
     },
 
@@ -131,7 +131,7 @@ var ActivitiesView = Backbone.View.extend({
 
 var StatsView = Backbone.View.extend({
     initialize: function () {
-        this.model.bind('add remove change', _.bind(this.render, this));
+        this.listenTo(this.model, 'add remove change', this.render);
     },
 
     events: {
@@ -143,26 +143,25 @@ var StatsView = Backbone.View.extend({
 
     render: function () {
         this.$el.html(this.template({stats: this.model}));
-        //var chart = c3.generate({
-        //    bindto: "#" + this.$el.find('.stat-chart'),
-        //    data: {
-        //        x: 'x',
-        //        columns: [
-        //            ['x'].concat(this.model.map(function (stat) { return stat.get('date') })),
-        //            ['data1'].concat(this.model.map(function (stat) { return stat.get('count')}))
-        //        ]
-        //    },
-        //    axis: {
-        //        x: {
-        //            type: 'timeseries',
-        //            tick: {
-        //                format: '%Y-%m-%d'
-        //            }
-        //        }
-        //    }
-        //});
-        //console.log(chart);
-        //console.log(['x'] + this.model.map(function (stat) { return stat.get('date') }));
+        var chart = c3.generate({
+            bindto: this.$el.find('.stat-chart').get(0),
+            data: {
+                x: 'x',
+                columns: [
+                    ['x'].concat(this.model.map(function (stat) { return stat.get('date') })),
+                    ['data1'].concat(this.model.map(function (stat) { return stat.get('count')}))
+                ]
+            },
+            axis: {
+                x: {
+                    label: '',
+                    type: 'timeseries',
+                    tick: {
+                        format: '%Y-%m-%d'
+                    }
+                }
+            }
+        });
         return this;
     },
 
