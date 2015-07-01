@@ -20,6 +20,7 @@ class Activity(BaseModel):
 
     class Meta:
         unique_together = ('owner', 'title',)
+        ordering = ['title']
 
     def __str__(self):
         return self.title
@@ -32,6 +33,7 @@ class Stat(BaseModel):
 
     class Meta:
         unique_together = ('activity', 'date',)
+        ordering = ['date']
 
 
 class ActivitySerializer(serializers.HyperlinkedModelSerializer):
@@ -55,6 +57,7 @@ class StatSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Stat
         fields = ('id', 'url', 'date', 'count')
+
 
 
 class StatUpdateSerializer(serializers.HyperlinkedModelSerializer):

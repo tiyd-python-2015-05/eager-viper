@@ -17,23 +17,89 @@
 
 <body>
 
-<div class="container" id="main">
+<div class="container">
+    <header class="row">
+        <h1 class="col-md-12">Stat Tracker</h1>
+    </header>
 
+    <div id="main"></div>
 </div>
 
 <script type="text/template" id="activity-list">
-    <div class="row">
+    <div class="panel-group" id="accordion" role="tablist"
+         aria-multiselectable="true">
         <% activities.forEach(function (activity) { %>
-            <%= activity %>
+        <div class="panel panel-default">
+            <div class="panel-heading activity-heading" role="tab"
+                 id="heading-<%= activity.id %>">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse"
+                       data-activity-id="<%= activity.id %>"
+                       data-parent="#accordion"
+                       href="#collapse-<%= activity.id %>"
+                       aria-expanded="true"
+                       aria-controls="collapse-<%= activity.id %>">
+                        <%= activity.get('title') %>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse-<%= activity.id %>"
+                 class="panel-collapse collapse"
+                 role="tabpanel" aria-labelledby="heading-<%= activity.id %>">
+                <div class="panel-body">
+
+                </div>
+            </div>
+        </div>
         <% }) %>
     </div>
+    <h2>New Activity</h2>
+    <form class="new-activity-form form-inline">
+        <div class="form-group">
+            <input type="text" name="title" placeholder="title"/>
+        </div>
+
+        <button type="submit" class="btn btn-default btn-xs">Add</button>
+    </form>
 </script>
 
-<script type="text/template" id="activity-detail">
-    <div>
-        <a class="btn btn-default" href="<%= url %>"><%= title %></a>
-    </div>
+<script type="text/template" id="stat-list">
+    <% if (stats.length === 0) { %>
+    No stats yet.
+    <% } else { %>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Count</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% stats.forEach(function (stat) { %>
+        <tr>
+            <td><%= stat.get('date') %></td>
+            <td><%= stat.get('count') %></td>
+            <td><span class="glyphicon glyphicon-remove" aria-hidden="true"
+                      data-stat-id="<%= stat.id %>"></span></td>
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
+    <% } %>
+    <form class="new-stat-form form-inline">
+        <div class="form-group">
+            <input type="date" name="date" placeholder="date"/>
+        </div>
+
+        <div class="form-group">
+            <input type="number" name="count" placeholder="count"/>
+        </div>
+
+        <button type="submit" class="btn btn-default btn-xs">Add</button>
+    </form>
 </script>
+
 <script src="{% static 'js/bundle.js' %}"></script>
 </body>
 

@@ -29,7 +29,7 @@ class StatsView(generics.ListCreateAPIView):
 
     def dispatch(self, request, *args, **kwargs):
         activity_pk = kwargs['activity_pk']
-        self.activity = Activity.objects.get(pk=activity_pk)
+        self.activity = self.request.user.activities.get(pk=activity_pk)
         return super().dispatch(request, *args, **kwargs)
 
 

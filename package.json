@@ -1,0 +1,23 @@
+{
+  "name": "eager_viper",
+  "version": "1.0.0",
+  "main": "main.js",
+  "dependencies": {
+    "backbone": "^1.2.1",
+    "backbone.paginator": "^2.0.2",
+    "bootstrap": "^3.3.5",
+    "jquery": "^2.1.4",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "browserify": "^10.2.4",
+    "watchify": "^3.2.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/watchify eager_viper/static/js/main.js -o eager_viper/static/js/bundle.js"
+  },
+  "author": "",
+  "repository": "snakes",
+  "license": "MIT"
+}
