@@ -90,7 +90,7 @@ var Stats = Backbone.Collection.extend({
 
 var ActivitiesView = Backbone.View.extend({
     initialize: function () {
-        this.model.bind('add remove change', _.bind(this.render, this));
+        this.listenTo(this.model, 'add remove change', this.render);
         this.stats = {};
     },
 
@@ -130,7 +130,7 @@ var ActivitiesView = Backbone.View.extend({
 
 var StatsView = Backbone.View.extend({
     initialize: function () {
-        this.model.bind('add remove change', _.bind(this.render, this));
+        this.listenTo(this.model, 'add remove change', this.render);
     },
 
     events: {
